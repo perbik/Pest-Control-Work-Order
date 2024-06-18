@@ -1,13 +1,11 @@
-import NavBarCompomenet from "./components/NavBarCompomenet";
+import NavBarComponent from "./components/NavBarComponent";
 
 function App() {
-
-
   return (
     <>
-      <NavBarCompomenet />
+      <NavBarComponent />
     </>
   );
 }
 
-export default App
+export default App;

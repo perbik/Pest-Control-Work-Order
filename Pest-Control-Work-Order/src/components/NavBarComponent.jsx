@@ -1,18 +1,26 @@
+import "./NavBarComponent.css";
+
 const NavBarComponent = () => {
   return (
     <>
-        <nav>
-            <div>
-                <h2><LOGO></LOGO></h2>
-            </div>
-            <ul>
-                <li><a>Home</a></li>
-                <li><a>About</a></li>
-                <li><a>Contact</a></li>
-            </ul>
-        </nav>
+      <nav className="navbar">
+        <div className="logo">
+          <h2>LOGO</h2>
+        </div>
+        <ul className="navbar-items">
+          <li>
+            <a>Home</a>
+          </li>
+          <li>
+            <a>About</a>
+          </li>
+          <li>
+            <a>Contact</a>
+          </li>
+        </ul>
+      </nav>
     </>
-  )
-}
+  );
+};
 
-export default NavBarComponent
+export default NavBarComponent;

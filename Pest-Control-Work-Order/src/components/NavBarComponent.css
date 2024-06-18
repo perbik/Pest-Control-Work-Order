@@ -1,0 +1,21 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(11, 53, 2);
+  padding: 10px;
+}
+
+.logo {
+  color: white;
+}
+
+.navbar-items {
+  display: flex;
+  list-style-type: none;
+  color: white;
+}
+
+.navbar-items li {
+  margin: 0 20px;
+}
