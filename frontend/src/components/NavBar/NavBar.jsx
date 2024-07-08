@@ -9,7 +9,10 @@ const NavBar = () => {
 
   return (
     <div className="navbar">
-      <h2>Uno Pest Co.</h2>
+      <div className="navbar-logo-container">
+        <img id="navbar-logo" src={assets.uno_pest_co} alt="" />
+        <h2>Uno Pest Co.</h2>
+      </div>
       <ul className="navbar-menu">
         <li
           onClick={() => setMenu("Home")}
@@ -31,13 +34,12 @@ const NavBar = () => {
         </li>
       </ul>
       <div className="navbar-right">
-        <img src={assets.uno_pest_co} alt="" />
-        <img src={assets.searchIcon} alt="" />
+        <img src={assets.search_icon} alt="" />
         <div className="navbar-search-icon">
           <img src={assets.cart_icon} alt="" />
           <div className="dot"></div>
         </div>
-        <button>sign in</button>
+        <button>Sign in</button>
       </div>
     </div>
   );

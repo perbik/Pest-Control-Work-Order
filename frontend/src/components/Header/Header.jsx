@@ -1,16 +1,19 @@
-import React from 'react'
-import './Header.css'
+import React from "react";
+import "./Header.css";
 
 const Header = () => {
   return (
-    <div className='header'>
+    <div className="header">
       <div className="header-contents">
-        <h2>Order pest control product here</h2>
-        <p>The quick brown fox jumps over the lazy dog.</p>
+        <h2>Order pest control products here</h2>
+        <p>
+          Select from these pest control solutions to effectively mitigate and
+          eliminate pest infestations.
+        </p>
         <button>View Menu</button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

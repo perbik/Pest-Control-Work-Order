@@ -9,13 +9,16 @@ import fendona from "./fendona.png";
 import optigard from "./optigard.png";
 import oxyfly from "./oxyfly.png";
 import permacap from "./permacap.png";
-import pounce from "./pounce";
+import pounce from "./pounce.png";
 import resigen_ec from "./resigen_ec.png";
 import storm_secure_wax_bait from "./storm_secure_wax_bait.png";
 import sumilarv from "./sumilarv.png";
 
 // logo
 import uno_pest_co from "./uno_pest_co.svg";
+
+//header
+import header_img from "./header_img.png";
 
 export const assets = {
   cart_icon,
@@ -31,4 +34,5 @@ export const assets = {
   storm_secure_wax_bait,
   sumilarv,
   uno_pest_co,
+  header_img,
 };
