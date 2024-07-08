@@ -10,16 +10,18 @@ const ProductDisplay = ({ category }) => {
       <h2>Products</h2>
       <div className="product-display-list">
         {product_list.map((item, index) => {
-          return (
-            <ProductItem
-              key={index}
-              id={item._id}
-              name={item.product_name}
-              description={item.description}
-              price={item.price}
-              image={item.product_img}
-            />
-          );
+          if (category === "All" || category === item.category) {
+            return (
+              <ProductItem
+                key={index}
+                id={item._id}
+                name={item.product_name}
+                description={item.description}
+                price={item.price}
+                image={item.product_img}
+              />
+            );
+          }
         })}
       </div>
     </div>
