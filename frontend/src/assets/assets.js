@@ -25,6 +25,7 @@ import sumilarv from "./sumilarv.png";
 
 // logo
 import uno_pest_co from "./uno_pest_co.svg";
+import logo_title from "./logo_title.png";
 
 //header
 import header_img from "./header_img.png";
@@ -49,6 +50,7 @@ export const assets = {
   add_icon_green,
   add_icon_white,
   remove_icon,
+  logo_title,
 };
 
 export const target_pest = [
