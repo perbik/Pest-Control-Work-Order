@@ -7,10 +7,10 @@ const Header = () => {
       <div className="header-contents">
         <h2>Order pest control products here</h2>
         <p>
-          Select from these pest control solutions to effectively mitigate and
-          eliminate pest infestations.
+          Select from these pest control solutions to effectively prevent,
+          mitigate, and eliminate pest infestations.
         </p>
-        <button>View Menu</button>
+        <button>View Products</button>
       </div>
     </div>
   );
