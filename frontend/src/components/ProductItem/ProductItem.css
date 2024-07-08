@@ -1,6 +1,6 @@
 .product-item {
   width: 100%;
-  margin: auto;
+  margin: 10px;
   border-radius: 15px;
   box-shadow: 0px 0px 10px #00000015;
   transition: 0.3s;
@@ -28,7 +28,37 @@
 
 .product-item-price {
   color: #38a852;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 500;
-  margin: 10px 0px;
+  margin: 30px 0px;
+}
+
+.product-item-container {
+  position: relative;
+}
+
+.product-item-container .add {
+  width: 35px;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px #00000072;
+}
+
+.product-item-counter {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px;
+  border-radius: 50px;
+  background-color: white;
+  box-shadow: 0px 0px 10px #00000072;
+}
+
+.product-item-counter img {
+  width: 30px;
 }
