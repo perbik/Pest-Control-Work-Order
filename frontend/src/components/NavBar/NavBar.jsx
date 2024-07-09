@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./NavBar.css";
-import searchIcon from "../../assets/search_icon.png";
-import cartIcon from "../../assets/cart_icon.png";
+import search_icon from "../../assets/search_icon.png";
+import cart_icon from "../../assets/cart_icon.png";
 import { assets } from "../../assets/assets";
 
-const NavBar = () => {
+const NavBar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("Home");
 
   return (
@@ -39,7 +39,7 @@ const NavBar = () => {
           <img src={assets.cart_icon} alt="" />
           <div className="dot"></div>
         </div>
-        <button>Sign in</button>
+        <button onClick={() => setShowLogin(true)}>Sign in</button>
       </div>
     </div>
   );
