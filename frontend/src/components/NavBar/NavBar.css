@@ -15,7 +15,7 @@
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 20px; /* Adjusted gap between icons */
+  gap: 20px;
 }
 
 .navbar button {
@@ -46,7 +46,7 @@
 .navbar-search-icon {
   display: flex;
   align-items: center;
-  gap: 10px; /* Adjusted gap between search box and search icon */
+  gap: 10px;
   cursor: pointer;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .navbar-search-box input[type="text"] {
-  width: 200px; /* Adjusted width of the search box */
+  width: 200px;
   padding: 8px;
   border: none;
   outline: none;
