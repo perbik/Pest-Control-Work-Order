@@ -3,11 +3,31 @@ import "./NavBar.css";
 import { assets } from "../../assets/assets";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
+import { product_list } from "../../assets/assets";
 
 const NavBar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("Home");
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   const { getTotalCartAmount } = useContext(StoreContext);
+
+  const handleSearchClick = () => {
+    setShowSearch(!showSearch);
+    setSearchResults([]);
+    setSearchInput("");
+  };
+
+  const handleSearchInputChange = (e) => {
+    const inputValue = e.target.value;
+    setSearchInput(inputValue);
+
+    const filteredResults = product_list.filter((product) =>
+      product.product_name.toLowerCase().includes(inputValue.toLowerCase())
+    );
+    setSearchResults(filteredResults);
+  };
 
   return (
     <div className="navbar">
@@ -25,10 +45,10 @@ const NavBar = ({ setShowLogin }) => {
           Home
         </li>
         <li
-          onClick={() => setMenu("Menu")}
-          className={menu === "Menu" ? "active" : ""}
+          onClick={() => setMenu("Products")}
+          className={menu === "Products" ? "active" : ""}
         >
-          Menu
+          Products
         </li>
         <li
           onClick={() => setMenu("About")}
@@ -38,8 +58,29 @@ const NavBar = ({ setShowLogin }) => {
         </li>
       </ul>
       <div className="navbar-right">
-        <img src={assets.search_icon} alt="Search" />
         <div className="navbar-search-icon">
+          <img
+            src={assets.search_icon}
+            alt="Search"
+            onClick={handleSearchClick}
+          />
+          {}
+          {showSearch && (
+            <div className="navbar-search-box">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchInput}
+                onChange={handleSearchInputChange}
+              />
+              {}
+              <ul className="search-results">
+                {searchResults.map((product) => (
+                  <li key={product._id}>{product.product_name}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           <Link to="/cart">
             <img src={assets.cart_icon} alt="Cart" />
           </Link>
