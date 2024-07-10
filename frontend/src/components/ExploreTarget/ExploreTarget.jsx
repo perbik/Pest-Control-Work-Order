@@ -6,7 +6,7 @@ const ExploreTarget = ({ category, setCategory }) => {
   return (
     <div className="explore-target" id="explore-target">
       <h1>Types of pests</h1>
-      <p className="explore-target-text">Select the type of pest...</p>
+      <p className="explore-target-text">Select the type of pest</p>
       <div className="explore-target-list">
         {target_pest.map((item, index) => {
           return (
