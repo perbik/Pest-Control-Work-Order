@@ -4,6 +4,7 @@ import search_icon from "./search_icon.png";
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
 import remove_icon from "./remove_icon_red.png";
+import cross_icon from "./cross_icon.png";
 
 // others
 import rating_starts from "./rating_starts.png";
@@ -51,6 +52,7 @@ export const assets = {
   add_icon_white,
   remove_icon,
   logo_title,
+  cross_icon,
 };
 
 export const target_pest = [
