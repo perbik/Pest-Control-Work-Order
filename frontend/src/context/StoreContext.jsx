@@ -4,6 +4,7 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
+  const [paymentMethod, setPaymentMethod] = useState(null); // No default payment method
 
   const addToCart = (itemId) => {
     if (!cartItems[itemId]) {
@@ -28,6 +29,21 @@ const StoreContextProvider = (props) => {
     return totalAmount;
   };
 
+  const getDiscountedAmount = () => {
+    const totalAmount = getTotalCartAmount();
+    let discount = 0;
+
+    if (paymentMethod === "cash") {
+      if (totalAmount >= 150000 && totalAmount <= 170000) {
+        discount = totalAmount * 0.05;
+      } else if (totalAmount >= 180000) {
+        discount = totalAmount * 0.1;
+      }
+    }
+
+    return discount;
+  };
+
   const contextValue = {
     product_list,
     cartItems,
@@ -35,6 +51,9 @@ const StoreContextProvider = (props) => {
     addToCart,
     removeFromCart,
     getTotalCartAmount,
+    paymentMethod,
+    setPaymentMethod,
+    getDiscountedAmount,
   };
 
   return (
