@@ -7,14 +7,9 @@ const Footer = () => {
     <div className="footer" id="footer">
       <div className="footer-content">
         <div className="footer-content-left">
-          <img src={assets.uno_pest_co} alt="" />
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.
+            Uno Pest Company offers high quality products used in preventing,
+            reducing, and removing pests.
           </p>
         </div>
         <div className="footer-content-center">
@@ -29,8 +24,8 @@ const Footer = () => {
         <div className="footer-content-right">
           <h2>GET IN TOUCH</h2>
           <ul>
-            <li>phone number</li>
-            <li>email address</li>
+            <li>+639123456789</li>
+            <li>unopestcompany@gmail.com</li>
           </ul>
         </div>
       </div>

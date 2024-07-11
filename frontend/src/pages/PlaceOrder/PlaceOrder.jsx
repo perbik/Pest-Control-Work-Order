@@ -23,7 +23,7 @@ const PlaceOrder = () => {
           <input type="text" placeholder="Last Name" />
         </div>
         <input type="email" placeholder="Email Address" />
-        <input type="text" placeholder="City" />
+        <input type="text" placeholder="Address" />
         <input type="text" placeholder="Phone" />
       </div>
       <div className="place-order-right">
