@@ -69,11 +69,20 @@ const Cart = () => {
             <label>
               <input
                 type="radio"
-                value="card"
-                checked={selectedPaymentMethod === "card"}
+                value="credit card"
+                checked={selectedPaymentMethod === "credit card"}
                 onChange={handlePaymentMethodChange}
               />
-              Card
+              Credit
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="debit card"
+                checked={selectedPaymentMethod === "debit card"}
+                onChange={handlePaymentMethodChange}
+              />
+              Debit
             </label>
             <label>
               <input

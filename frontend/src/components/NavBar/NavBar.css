@@ -97,3 +97,10 @@
 #navbar-logo {
   height: 50px;
 }
+
+.search-icon {
+  margin: 10px;
+}
+.cart-icon {
+  margin-top: 5px;
+}
