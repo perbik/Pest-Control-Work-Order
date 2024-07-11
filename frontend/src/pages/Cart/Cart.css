@@ -58,3 +58,42 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+.cart-total hr {
+  margin: 10px 0px;
+}
+
+.payment-method {
+  margin-top: 20px;
+}
+
+.payment-method p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.payment-method label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.payment-method input[type="radio"] {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.cart-total button {
+  border: none;
+  color: white;
+  background-color: #38a852;
+  width: max(15vw, 200px);
+  padding: 12px 0px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cart-total button:hover {
+  background-color: #2d7e42;
+}

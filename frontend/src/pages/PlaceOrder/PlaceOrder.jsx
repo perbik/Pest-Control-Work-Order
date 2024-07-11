@@ -1,9 +1,19 @@
-import React, { useContext } from "react";
+//placeorder
+import React, { useContext, useState } from "react";
 import "./PlaceOrder.css";
 import { StoreContext } from "../../context/StoreContext";
 
 const PlaceOrder = () => {
-  const { getTotalCartAmount } = useContext(StoreContext);
+  const { getTotalCartAmount, getDiscountedAmount, setPaymentMethod } =
+    useContext(StoreContext);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
+
+  const handlePaymentMethodChange = (event) => {
+    const method = event.target.value;
+    setSelectedPaymentMethod(method);
+    setPaymentMethod(method);
+  };
+
   return (
     <form className="place-order">
       <div className="place-order-left">
@@ -17,12 +27,14 @@ const PlaceOrder = () => {
         <input type="text" placeholder="Phone" />
       </div>
       <div className="place-order-right">
-        <div className="cart-total">
-          <h2>Cart Total</h2>
-          <div className="cart-total-details">
-            <p>PHP {getTotalCartAmount()}</p>
+        <div className="total">
+          <h2>Cart Totals</h2>
+          <div className="total-details">
+            <p>Subtotal: PHP {getTotalCartAmount()}</p>
+            <p>Discount: PHP {getDiscountedAmount()}</p>
+            <b>Total: PHP {getTotalCartAmount() - getDiscountedAmount()}</b>
           </div>
-          <button>PROCEED TO PAYMENT</button>
+          <button type="submit">PROCEED TO PAYMENT</button>
         </div>
       </div>
     </form>
