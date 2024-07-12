@@ -18,23 +18,24 @@ const PlaceOrder = () => {
     <form className="place-order">
       <div className="place-order-left">
         <p className="title">Delivery Information</p>
-        <div className="multi-fields">
-          <input type="text" placeholder="First Name" />
-          <input type="text" placeholder="Last Name" />
-        </div>
+        <input type="text" placeholder="Name" />
         <input type="email" placeholder="Email Address" />
         <input type="text" placeholder="Address" />
         <input type="text" placeholder="Phone" />
       </div>
       <div className="place-order-right">
         <div className="total">
-          <h2>Cart Totals</h2>
+          <h2 className="title">Cart Total</h2>
           <div className="total-details">
-            <p>Subtotal: PHP {getTotalCartAmount()}</p>
-            <p>Discount: PHP {getDiscountedAmount()}</p>
-            <b>Total: PHP {getTotalCartAmount() - getDiscountedAmount()}</b>
+            <p className="sub-amount">Subtotal: PHP {getTotalCartAmount()}</p>
+            <p className="discount-amount">
+              Discount: PHP {getDiscountedAmount()}
+            </p>
+            <b className="total-amount">
+              Total: PHP {getTotalCartAmount() - getDiscountedAmount()}
+            </b>
           </div>
-          <button type="submit">PROCEED TO PAYMENT</button>
+          <button type="submit">CONFIRM</button>
         </div>
       </div>
     </form>
