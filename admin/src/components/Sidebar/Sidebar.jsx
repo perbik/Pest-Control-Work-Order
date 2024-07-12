@@ -16,23 +16,23 @@ const Sidebar = () => {
                 <p>Add Products</p>
             </NavLink>
             <NavLink to='/products' className="sidebar-option">
-                <img className='icons' src={assets.products} alt="" />
+                <img className='icons' src={assets.orders} alt="" />
                 <p>Products</p>
             </NavLink>
             <NavLink to='/customers' className="sidebar-option">
-                <img className='icons' src={assets.products} alt="" />
+                <img className='icons' src={assets.customer} alt="" />
                 <p>Customers</p>
             </NavLink>
-            <NavLink to='/orders' className="sidebar-option">
-                <img className='icons' src={assets.orders} alt="" />
+            <NavLink to='/purchases' className="sidebar-option">
+                <img className='icons' src={assets.products} alt="" />
                 <p>Purchases</p>
             </NavLink>
-            <NavLink to='/orders' className="sidebar-option">
-                <img className='icons' src={assets.orders} alt="" />
+            <NavLink to='/payment' className="sidebar-option">
+                <img className='icons' src={assets.payment} alt="" />
                 <p>Payment</p>
             </NavLink>
-            <NavLink to='/orders' className="sidebar-option">
-                <img className='icons' src={assets.orders} alt="" />
+            <NavLink to='/sales' className="sidebar-option">
+                <img className='icons' src={assets.sales} alt="" />
                 <p>Sales Record</p>
             </NavLink>
         </div>

@@ -1,115 +1,90 @@
 import React, { useEffect, useState } from 'react';
-import { assets } from '../../assets/assets';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const UpdateProd = () => {
-  const navigate = useNavigate(); // Move this to the top level
-  const [image, setImage] = useState(false);
-  const [data, setData] = useState({
-    CustomerName: '',
-    CustomerAddress: '',
-    CustomerPhone: '',
-    CustomerEmail: '',
-  });
+const UpdateCust = () => {
 
-  const {ProductID} = useParams();
+    const navigate = useNavigate();
+    const [data, setData] = useState({
+        CustomerName: '',
+        CustomerAddress: '',
+        CustomerPhone: '',
+        CustomerEmail: '',
+    });
 
-  const onChangeHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setData((prevData) => ({ ...prevData, [name]: value }));
-  };
+    const {CustomerID} = useParams();
 
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append('ProductName', data.CustomerName);
-    formData.append('ProductName', data.CustomerAddress);
-    formData.append('TargetPestType', data.CustomerPhone);
-    formData.append('ProductUnitPrice', Number(data.CustomerEmail));
+    const onChangeHandler = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setData((prevData) => ({ ...prevData, [name]: value }));
+    };
 
-    try {
-      const response = await axios.put('http://localhost:8081/updateprod/'+CustomerID, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      if (response.data.success) {
-        setData({
-            CustomerName: '',
-            CustomerAddress: '',
-            CustomerPhone: '',
-            CustomerEmail: '',
-        });
-        setImage(null);
-        toast.success('Customer Details updated successfully!');
-        navigate('/products'); // Use navigate here
-      } else {
-        console.error('Error:', response.data);
-      }
-    } catch (error) {
-      console.error('Error uploading product:', error);
-    }
-  };
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
+    const onSubmitHandler = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await axios.put('http://localhost:8081/updatecust/'+CustomerID, data);
+            if (response.data.success) {
+                setData({
+                    CustomerName: '',
+                    CustomerAddress: '',
+                    CustomerPhone: '',
+                    CustomerEmail: '',
+                });
+                toast.success('Customer updated successfully!');
+                navigate('/customers');
+            } else {
+                console.error('Error:', response.data);
+            }
+        } catch (error) {
+            console.error('Error updating customer:', error);
+        }
+    };
+  
   return (
     <div className='add'>
-      <h2>Update Product</h2>
+      <h2>Update Customer</h2>
       <form className='flex-col' onSubmit={onSubmitHandler}>
-        <div className="add-image-upload flex-col">
-          <p>Upload Image</p>
-          <label htmlFor="image">
-            <img src={image ? URL.createObjectURL(image) : assets.upload} alt="" />
-          </label>
-          <input
-            onChange={(e) => setImage(e.target.files[0])}
-            type="file"
-            id="image"
-            hidden
-            required
-          />
-        </div>
         <div className="add-product-name flex-col">
-          <p>Product Name</p>
+          <p>Customer/Company Name</p>
           <input
             onChange={onChangeHandler}
-            value={data.ProductName}
+            value={data.CustomerName}
             type="text"
-            name="ProductName"
+            name="CustomerName"
             placeholder="Type Here"
           />
         </div>
-        
-        <div className="add-category-price">
-          <div className="add-category flex-col">
-            <p>Target Pest Type</p>
-            <select
-              onChange={onChangeHandler}
-              name="TargetPestType"
-              value={data.TargetPestType}
-            >
-              <option value="General">General</option>
-              <option value="Insect">Insect</option>
-              <option value="Rodent">Rodent</option>
-            </select>
-          </div>
-          <div className="add-price flex-col">
-            <p>Product Unit Price</p>
-            <input
-              onChange={onChangeHandler}
-              value={data.ProductUnitPrice}
-              type="number"
-              name="ProductUnitPrice"
-              placeholder="PHP00.00"
-            />
-          </div>
+        <div className="add-product-name flex-col">
+          <p>Customer Address</p>
+          <input
+            onChange={onChangeHandler}
+            value={data.CustomerAddress}
+            type="text"
+            name="CustomerAddress"
+            placeholder="Metro Manila, Philippines"
+          />
+        </div>
+        <div className="add-product-name flex-col">
+          <p>Phone Number</p>
+          <input
+            onChange={onChangeHandler}
+            value={data.CustomerPhone}
+            type="text"
+            name="CustomerPhone"
+            placeholder="09123456789"
+          />
+        </div>
+        <div className="add-product-name flex-col">
+          <p>Email Address</p>
+          <input
+            onChange={onChangeHandler}
+            value={data.CustomerEmail}
+            type="text"
+            name="CustomerEmail"
+            placeholder="example@email.com"
+          />
         </div>
         <button type="submit" className="add-btn">UPDATE</button>
       </form>
@@ -117,4 +92,4 @@ const UpdateProd = () => {
   );
 };
 
-export default UpdateProd;
+export default UpdateCust;

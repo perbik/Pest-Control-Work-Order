@@ -5,7 +5,6 @@ import { Routes,Route } from "react-router-dom"
 import Add from './pages/Add/Add'
 import Customers from './pages/Customers/Customers'
 import Dashboard from './pages/Dashboard/Dashboard'
-import Orders from './pages/Orders/Orders'
 import Products from './pages/Products/Products'
 import UpdateProd from './pages/Update/UpdateProd'
 import UpdateCust from './pages/Update/UpdateCust'
@@ -25,9 +24,10 @@ const App = () => {
             <Route path="/add" element={<Add/>}/>
             <Route path="/products" element={<Products/>}/>
             <Route path="/customers" element={<Customers/>}/>
-            <Route path="/orders" element={<Orders/>}/>
+
+
             <Route path="/updateprod/:ProductID" element={<UpdateProd/>}/>
-            <Route path="/updatecust/:ProductID" element={<UpdateCust/>}/>
+            <Route path="/updatecust/:CustomerID" element={<UpdateCust/>}/>
           </Routes>
       </div>
     </div>
