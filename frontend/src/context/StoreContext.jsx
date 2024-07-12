@@ -27,10 +27,13 @@ const StoreContextProvider = (props) => {
       if (currentQuantity > 5) {
         return { ...prev, [itemId]: currentQuantity - 1 };
       } else {
-        alert("You cannot have less than 5 items.");
-        return prev;
+        return { ...prev, [itemId]: currentQuantity - 5 };
       }
     });
+  };
+
+  const clearCart = () => {
+    setCartItems({});
   };
 
   const getTotalCartAmount = () => {
@@ -65,6 +68,7 @@ const StoreContextProvider = (props) => {
     setCartItems,
     addToCart,
     removeFromCart,
+    clearCart,
     getTotalCartAmount,
     paymentMethod,
     setPaymentMethod,
