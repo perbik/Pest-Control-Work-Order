@@ -1,17 +1,31 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./NavBar.css";
 import { assets } from "../../assets/assets";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
 import { product_list } from "../../assets/assets";
 
-const NavBar = ({ setShowLogin }) => {
+const NavBar = () => {
   const [menu, setMenu] = useState("Home");
   const [showSearch, setShowSearch] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [username, setUsername] = useState(""); // State for username
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const { getTotalCartAmount } = useContext(StoreContext);
+
+  useEffect(() => {
+    // Fetch username from the database or API
+    const fetchUsername = async () => {
+      // Replace with your actual fetch call
+      const response = await fetch("/api/getUsername");
+      const data = await response.json();
+      setUsername(data.username);
+    };
+
+    fetchUsername();
+  }, []);
 
   const handleSearchClick = () => {
     setShowSearch(!showSearch);
@@ -27,6 +41,15 @@ const NavBar = ({ setShowLogin }) => {
       product.product_name.toLowerCase().includes(inputValue.toLowerCase())
     );
     setSearchResults(filteredResults);
+  };
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleLogout = () => {
+    // Implement logout functionality
+    console.log("User logged out");
   };
 
   return (
@@ -65,7 +88,6 @@ const NavBar = ({ setShowLogin }) => {
             alt="Search"
             onClick={handleSearchClick}
           />
-          {}
           {showSearch && (
             <div className="navbar-search-box">
               <input
@@ -74,7 +96,6 @@ const NavBar = ({ setShowLogin }) => {
                 value={searchInput}
                 onChange={handleSearchInputChange}
               />
-              {}
               <ul className="search-results">
                 {searchResults.map((product) => (
                   <li key={product._id}>{product.product_name}</li>
@@ -82,12 +103,18 @@ const NavBar = ({ setShowLogin }) => {
               </ul>
             </div>
           )}
-          <Link to="/cart">
-            <img className="cart-icon" src={assets.cart_icon} alt="Cart" />
-          </Link>
-          <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div>
         </div>
-        <button onClick={() => setShowLogin(true)}>Sign in</button>
+        <Link to="/cart">
+          <img className="cart-icon" src={assets.cart_icon} alt="Cart" />
+        </Link>
+        <div className="navbar-username" onClick={toggleDropdown}>
+          Hello, {username}
+          {dropdownVisible && (
+            <div className="dropdown-menu">
+              <button onClick={handleLogout}>Log out</button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
