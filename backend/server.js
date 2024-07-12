@@ -15,7 +15,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
+    password: "MYSQLdbms0531",
     database: "pest_control",
 });
 
@@ -110,6 +110,7 @@ app.post('/add', upload.single('ProdImage'), (req, res) => {
 
 
 
+
 // READ FUNCTIONS DITO SA BABA
 // product table
 app.get('/products', (req, res) => {
@@ -196,7 +197,19 @@ app.put('/updatecust/:CustomerID', (req, res) => {
     });
 });
 
+app.put('/updatepaym/:PaymentID', (req, res) => {
+    const sql = "UPDATE payment SET PurchaseSubtotal = ?, PaymentMethod = ?, Discount = ?, GrandTotal = ? WHERE PaymentID = ?";
+    const PaymentID = req.params.PaymentID;
+    const { PurchaseSubtotal, PaymentMethod, Discount, GrandTotal } = req.body;
 
+    db.query(sql, [PurchaseSubtotal, PaymentMethod, Discount, GrandTotal, PaymentID], (err, result) => {
+        if (err) {
+            console.error('Error updating customer data:', err);
+            return res.status(500).json(err);
+        }
+        return res.json({ success: true });
+    });
+});
   
 
 
@@ -266,7 +279,18 @@ app.delete('/deletesales/:PurchaseID', (req, res) => {
     });
 });
 
+app.delete('/deletepaym/:PaymentID', (req, res) => {
+    const sql = "DELETE FROM customer WHERE PaymentID = ?";
+    const PaymentID = req.params.PaymentID;
 
+    db.query(sql, [PaymentID], (err, data) => {
+        if (err) {
+            console.error('Error deleting data:', err);
+            return res.status(500).json(err);
+        }
+        return res.json({ success: true });
+    });
+});
 
 
 

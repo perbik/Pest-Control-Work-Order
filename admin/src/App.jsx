@@ -11,6 +11,7 @@ import Payments from './pages/Payments/Payments'
 import Sales from './pages/Sales/Sales'
 import UpdateProd from './pages/Update/UpdateProd'
 import UpdateCust from './pages/Update/UpdateCust'
+import UpdatePaym from './pages/Update/UpdatePaym'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -33,6 +34,7 @@ const App = () => {
 
             <Route path="/updateprod/:ProductID" element={<UpdateProd/>}/>
             <Route path="/updatecust/:CustomerID" element={<UpdateCust/>}/>
+            <Route path="/updatepaym/:PaymentID" element={<UpdatePaym/>}/>
           </Routes>
       </div>
     </div>
