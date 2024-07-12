@@ -11,6 +11,57 @@ const PlaceOrder = () => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const checkoutData = {
+      customerDetails: {
+          CustomerID: "", 
+          CustomerName: "",
+          CustomerAddress: "",
+          CustomerPhone: "",
+          CustomerEmail: ""
+      },
+      purchaseDetails: {
+          PurchaseDate: new Date().toISOString() 
+      },
+      salesRecords: [
+          {
+              ProductID: "",
+              ProductQuantity: 0,
+              ProductAmount: 0.0
+          }
+      ],
+      paymentDetails: {
+          PaymentMethod: "",
+          PurchaseSubtotal: 0.0,
+          Discount: 0.0,
+          GrandTotal: 0.0
+      }
+  };
+
+    try {
+        const response = await fetch('http://localhost:8081/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(checkoutData),
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          alert('Order placed successfully!');
+          window.location.href = '/order-success';
+        } else {
+          alert('Failed to place the order. Please try again.');
+        }
+    } catch (error) {
+        console.error('Checkout error:', error);
+        // Handle error (e.g., show an error message)
+    }
+};
+
   return (
     <form className="place-order">
       <div className="place-order-left">

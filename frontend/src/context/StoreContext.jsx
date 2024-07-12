@@ -55,7 +55,7 @@ const StoreContextProvider = (props) => {
     let discount = 0;
 
     if (paymentMethod === "cash") {
-      if (totalAmount >= 150000 && totalAmount <= 170000) {
+      if (totalAmount >= 150000 && totalAmount <= 179999) {
         discount = totalAmount * 0.05;
       } else if (totalAmount >= 180000) {
         discount = totalAmount * 0.1;
