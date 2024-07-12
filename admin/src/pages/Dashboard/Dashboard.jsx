@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
 // If using react-icons, import the icons you need
-import { FaProductHunt, FaUsers } from 'react-icons/fa';
+import { FaProductHunt, FaUsers,  } from 'react-icons/fa';
+import { AiFillProduct } from "react-icons/ai";
+import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import { BiSolidCartAlt } from "react-icons/bi";
 
 const MetricContainer = ({ icon, count, label }) => {
   return (
@@ -14,7 +17,7 @@ const MetricContainer = ({ icon, count, label }) => {
 };
 
 const Dashboard = () => {
-  const [counts, setCounts] = useState({ productsCount: 0, customersCount: 0 });
+  const [counts, setCounts] = useState({ productsCount: 0, customersCount: 0, salesCount: 0, purchasesCount: 0});
 
   useEffect(() => {
     fetch('http://localhost:8081/dashboard')
@@ -32,14 +35,24 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
       <div className="metrics">
         <MetricContainer
-          icon={<FaProductHunt />} // Replace with <FaProductHunt /> if using react-icons
+          icon={<AiFillProduct className="react-icon" />} 
           count={counts.productsCount}
           label="Total Products"
         />
         <MetricContainer
-          icon={<FaUsers />} // Replace with <FaUsers /> if using react-icons
+          icon={<FaUsers className="react-icon" />} 
           count={counts.customersCount}
           label="Total Customers"
+        />
+        <MetricContainer
+          icon={<RiMoneyDollarCircleFill className="react-icon" />} 
+          count="168200.50"
+          label="Total Sales"
+        />
+        <MetricContainer
+          icon={<BiSolidCartAlt className="react-icon"  />} 
+          count="36"
+          label="Total Purchases"
         />
       </div>
     </div>

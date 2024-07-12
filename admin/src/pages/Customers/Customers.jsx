@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import './Customers.css'
 import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom';
 
 const Customers = () => {
-
     const [data, setData] = useState([]);
+    const navigate = useNavigate();
+
     useEffect(() => {
       axios.get('http://localhost:8081/customers')
       .then(res => setData(res.data))

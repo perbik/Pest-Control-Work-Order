@@ -17,7 +17,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink to='/products' className="sidebar-option">
                 <img className='icons' src={assets.products} alt="" />
-                <p>Products List</p>
+                <p>Products</p>
             </NavLink>
             <NavLink to='/customers' className="sidebar-option">
                 <img className='icons' src={assets.products} alt="" />
@@ -25,7 +25,15 @@ const Sidebar = () => {
             </NavLink>
             <NavLink to='/orders' className="sidebar-option">
                 <img className='icons' src={assets.orders} alt="" />
-                <p>Orders</p>
+                <p>Purchases</p>
+            </NavLink>
+            <NavLink to='/orders' className="sidebar-option">
+                <img className='icons' src={assets.orders} alt="" />
+                <p>Payment</p>
+            </NavLink>
+            <NavLink to='/orders' className="sidebar-option">
+                <img className='icons' src={assets.orders} alt="" />
+                <p>Sales Record</p>
             </NavLink>
         </div>
     </div>
