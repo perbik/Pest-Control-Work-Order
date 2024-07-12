@@ -11,6 +11,9 @@ import rating_starts from "./rating_starts.png";
 
 // target pests
 import target from "./placeholder_target.png";
+import target_general from "./target_general.png";
+import target_insects from "./target_insects.png";
+import target_rodent from "./target_rodent.png";
 
 // products
 import cirrus from "./cirrus.png";
@@ -53,20 +56,23 @@ export const assets = {
   remove_icon,
   logo_title,
   cross_icon,
+  target_general,
+  target_insects,
+  target_rodent,
 };
 
 export const target_pest = [
   {
     pest_target: "General",
-    pest_img: target,
+    pest_img: target_general,
   },
   {
     pest_target: "Insect",
-    pest_img: target,
+    pest_img: target_insects,
   },
   {
     pest_target: "Rodent",
-    pest_img: target,
+    pest_img: target_rodent,
   },
 ];
 
@@ -75,16 +81,18 @@ export const product_list = [
     _id: "P001",
     product_name: "Fendona",
     product_img: fendona,
-    price: 3800.0,
-    description: "Something blah blah blah",
+    price: 3800,
+    description:
+      "A fast-acting pyrethroid insecticide that quickly and effectively eliminates disease-causing insects",
     category: "General",
   },
   {
     _id: "P002",
     product_name: "Storm Secure Wax Bait",
     product_img: storm_secure_wax_bait,
-    price: 2350.0,
-    description: "Something blah blah blah",
+    price: 2350,
+    description:
+      "A ready to use rodenticide for the control of rats and mice in and around buildings",
     category: "Rodent",
   },
   {
@@ -92,31 +100,34 @@ export const product_list = [
     product_name: "Pounce 500",
     product_img: pounce,
     price: 1388.88,
-    description: "Something blah blah blah",
+    description:
+      "Timber and residual insecticide for the control of a range of insect pests in various timber and timber processing situations",
     category: "Insect",
   },
   {
     _id: "P004",
-    product_name: "Delatacide",
+    product_name: "Deltacide",
     product_img: delatacide,
-    price: 4400.0,
-    description: "Something blah blah blah",
+    price: 4400,
+    description:
+      "An effective pyrethroid spray to control all public health pests problem combining rapid knockdown and kill",
     category: "General",
   },
   {
     _id: "P005",
     product_name: "Sumilarv 0.5G",
     product_img: sumilarv,
-    price: 150.0,
-    description: "Something blah blah blah",
+    price: 150,
+    description: "An advanced mosquito larval control agent",
     category: "Insect",
   },
   {
     _id: "P006",
     product_name: "Resigen EC",
     product_img: resigen_ec,
-    price: 4400.0,
-    description: "Something blah blah blah",
+    price: 4400,
+    description:
+      "An environmentally-sensitive solution for flying insect pest and vector-borne disease control",
     category: "Insect",
   },
   {
@@ -124,7 +135,8 @@ export const product_list = [
     product_name: "Optigard Ant Bait Gel",
     product_img: optigard,
     price: 688.88,
-    description: "Something blah blah blah",
+    description:
+      "A sugar-based gel matrix of Optigard ant gel bait is highly attractive to ants",
     category: "Insect",
   },
   {
@@ -132,7 +144,8 @@ export const product_list = [
     product_name: "Oxyfly Anti-Fly",
     product_img: oxyfly,
     price: 2688.88,
-    description: "Something blah blah blah",
+    description:
+      "Acts against a broad range of insects affecting farm premises",
     category: "Insect",
   },
   {
@@ -140,7 +153,7 @@ export const product_list = [
     product_name: "Permacap EC",
     product_img: permacap,
     price: 1688.88,
-    description: "Something blah blah blah",
+    description: "An insecticide that effectively kills more than 50 insects",
     category: "Insect",
   },
   {
@@ -148,7 +161,8 @@ export const product_list = [
     product_name: "Cirrus Fogging Concentrate",
     product_img: cirrus,
     price: 2688.88,
-    description: "Something blah blah blah",
+    description:
+      "A dual synergized formula that provides enhanced control of a wide range of commercial and residential pests",
     category: "General",
   },
 ];
