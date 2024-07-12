@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './Customers.css'
+import './Purchases.css'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -25,10 +25,10 @@ const Purchases = () => {
   };
 
   return (
-    <div className='list add flex-col'>
+    <div className='purch add flex-col'>
       <p>Customers List</p>
-      <div className="list-table">
-        <div className="list-table-format title">
+      <div className="purch-table">
+        <div className="purch-table-format title">
           <b>ID</b>
           <b>Purchase Date</b>
           <b>Customer ID</b>
@@ -36,19 +36,22 @@ const Purchases = () => {
           <b>Action</b>
         </div>
         {data.map((item, index) => {
-          return (
-          <div key={index} className="list-table-format">
-            <p>{item.PurchaseID}</p>
-            <p>{item.PurchaseDate}</p>
-            <p>{item.CustomerID}</p>
-            <p>{item.PaymentID}</p>
-            <p className='btn-div'>
-              <Link to={`/updatecust/${item.PurchaseID}`} className="btn-link">Update</Link>
-              <button onClick={() => handleDelete(item.PurchaseID)} className="btn-div">Delete</button>
-            </p>
-          </div>
-          );
-        })}
+  // Convert the ISO string to a Date object and format it to YYYY-MM-DD
+  const formattedPurchaseDate = new Date(item.PurchaseDate).toISOString().split('T')[0];
+
+  return (
+    <div key={index} className="purch-table-format">
+      <p>{item.PurchaseID}</p>
+      <p>{formattedPurchaseDate}</p> {/* Use the formatted date here */}
+      <p>{item.CustomerID}</p>
+      <p>{item.PaymentID}</p>
+      <p className='btn-div'>
+        <Link to={`/updatecust/${item.PurchaseID}`} className="btn-link">Update</Link>
+        <button onClick={() => handleDelete(item.PurchaseID)} className="btn-div">Delete</button>
+      </p>
+    </div>
+  );
+})}
       </div>
     </div>
   );

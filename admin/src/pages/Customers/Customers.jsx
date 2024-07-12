@@ -29,6 +29,7 @@ const Customers = () => {
       <p>Customers List</p>
       <div className="list-table">
         <div className="list-table-format title">
+          <b>ID</b>
           <b>Name</b>
           <b>Address</b>
           <b>Phone</b>
@@ -38,6 +39,7 @@ const Customers = () => {
         {data.map((item, index) => {
           return (
           <div key={index} className="list-table-format">
+            <p>{item.CustomerID}</p>
             <p>{item.CustomerName}</p>
             <p>{item.CustomerAddress}</p>
             <p>{item.CustomerPhone}</p>

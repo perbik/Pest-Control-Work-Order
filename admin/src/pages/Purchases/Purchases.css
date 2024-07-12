@@ -1,6 +1,6 @@
-.list-table-format{
+.purch-table-format{
     display: grid;
-    grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 0.9fr;
     align-items: center;
     gap: 10px;
     padding: 12px 15px;
@@ -8,16 +8,16 @@
     font-size: 13px;
 }
 
-.list-table-format-title{
+.purch-table-format-title{
     background-color: #f9f9f9;
 }
 
 @media (max-width:600px) {
-    .list-table-format{
+    .purch-table-format{
         grid-template-columns: 1fr 3fr 1fr;
         gap: 15px;
     }
-    .list-table-format-title{
+    .purch-table-format-title{
         display: none;
     }
 }
