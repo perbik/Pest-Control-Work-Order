@@ -1,0 +1,40 @@
+.dashboard {
+    width: 70%;
+    margin-left: max(5vw,25px);
+    margin-top: 50px;
+    margin-bottom: 50px;
+    color: #6d6d6d;
+    font-size:" 16px";
+  }
+  
+  .metrics {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .metric-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 300px;
+  }
+  
+  .icon {
+    font-size: 36px;
+    padding: 10px 0px 20px 0px;
+  }
+
+  .react-icon {
+    color: green;
+  }
+  
+  .count {
+    font-size: 40px;
+    font-weight: bold;
+    padding: 0px 0px 10px 0px;
+  }
+  
+  .label {
+    font-size: 16px;
+  }

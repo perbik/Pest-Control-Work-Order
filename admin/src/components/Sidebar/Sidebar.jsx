@@ -17,15 +17,23 @@ const Sidebar = () => {
             </NavLink>
             <NavLink to='/products' className="sidebar-option">
                 <img className='icons' src={assets.products} alt="" />
-                <p>Products List</p>
+                <p>Products</p>
             </NavLink>
-            <NavLink to='/Customers' className="sidebar-option">
+            <NavLink to='/customers' className="sidebar-option">
                 <img className='icons' src={assets.products} alt="" />
                 <p>Customers</p>
             </NavLink>
             <NavLink to='/orders' className="sidebar-option">
                 <img className='icons' src={assets.orders} alt="" />
-                <p>Orders</p>
+                <p>Purchases</p>
+            </NavLink>
+            <NavLink to='/orders' className="sidebar-option">
+                <img className='icons' src={assets.orders} alt="" />
+                <p>Payment</p>
+            </NavLink>
+            <NavLink to='/orders' className="sidebar-option">
+                <img className='icons' src={assets.orders} alt="" />
+                <p>Sales Record</p>
             </NavLink>
         </div>
     </div>
