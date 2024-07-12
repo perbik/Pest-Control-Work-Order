@@ -35,6 +35,7 @@ const App = () => {
             <Route path="/updateprod/:ProductID" element={<UpdateProd/>}/>
             <Route path="/updatecust/:CustomerID" element={<UpdateCust/>}/>
             <Route path="/updatepaym/:PaymentID" element={<UpdatePaym/>}/>
+
           </Routes>
       </div>
     </div>

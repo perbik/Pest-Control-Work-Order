@@ -15,7 +15,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "MYSQLdbms0531",
+    password: "",
     database: "pest_control",
 });
 
@@ -266,31 +266,73 @@ app.delete('/deletepurch/:PurchaseID', (req, res) => {
     });
 });
 
-app.delete('/deletesales/:PurchaseID', (req, res) => {
-    const sql = "DELETE FROM sales_record WHERE PurchaseID = ?";
-    const PurchaseID = req.params.PurchaseID;
-
-    db.query(sql, [PurchaseID], (err, data) => {
-        if (err) {
-            console.error('Error deleting data:', err);
-            return res.status(500).json(err);
-        }
-        return res.json({ success: true });
-    });
-});
-
 app.delete('/deletepaym/:PaymentID', (req, res) => {
-    const sql = "DELETE FROM customer WHERE PaymentID = ?";
-    const PaymentID = req.params.PaymentID;
+    const { PaymentID } = req.params;
 
-    db.query(sql, [PaymentID], (err, data) => {
+    // Step 1: Find all PurchaseIDs associated with the PaymentID
+    const findPurchaseQuery = "SELECT PurchaseID FROM purchase WHERE PaymentID = ?";
+    db.query(findPurchaseQuery, [PaymentID], (err, purchaseRecords) => {
+        if (err) {
+            console.error('Error finding purchase record:', err);
+            return res.status(500).json(err);
+        }
+        if (purchaseRecords.length === 0) {
+            return res.status(404).json({ error: 'Purchase record not found' });
+        }
+
+        // Step 2: Delete related records from sales_record table for each PurchaseID
+        const deletePromises = purchaseRecords.map((record) => {
+            return new Promise((resolve, reject) => {
+                const deleteSalesRecordSql = "DELETE FROM sales_record WHERE PurchaseID = ?";
+                db.query(deleteSalesRecordSql, [record.PurchaseID], (err, data) => {
+                    if (err) reject(err);
+                    else resolve(data);
+                });
+            });
+        });
+
+        Promise.all(deletePromises).then(() => {
+            // Step 3: Delete the records from the purchase table
+            const deletePurchaseSql = "DELETE FROM purchase WHERE PaymentID = ?";
+            db.query(deletePurchaseSql, [PaymentID], (err, data) => {
+                if (err) {
+                    console.error('Error deleting data from purchase:', err);
+                    return res.status(500).json(err);
+                }
+
+                // Step 4: Delete the record from the payment table
+                const deletePaymentSql = "DELETE FROM payment WHERE PaymentID = ?";
+                db.query(deletePaymentSql, [PaymentID], (err, data) => {
+                    if (err) {
+                        console.error('Error deleting data from payment:', err);
+                        return res.status(500).json(err);
+                    }
+                    return res.json({ success: true, message: 'Payment record deleted successfully' });
+                });
+            });
+        }).catch((error) => {
+            console.error('Error deleting related sales records:', error);
+            return res.status(500).json(error);
+        });
+    });
+});
+
+app.delete('/deletesales/:PurchaseID/:ProductID', (req, res) => {
+    const { PurchaseID, ProductID } = req.params;
+    const sql = "DELETE FROM sales_record WHERE PurchaseID = ? AND ProductID = ?";
+    
+    db.query(sql, [PurchaseID, ProductID], (err, data) => {
         if (err) {
             console.error('Error deleting data:', err);
             return res.status(500).json(err);
         }
-        return res.json({ success: true });
+        if (data.affectedRows === 0) {
+            return res.status(404).json({ message: 'No record found to delete' });
+        }
+        return res.json({ success: true, message: 'Record deleted successfully' });
     });
 });
+
 
 
 

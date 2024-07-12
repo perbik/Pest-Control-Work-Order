@@ -25,10 +25,10 @@ const Payments = () => {
   };
 
   return (
-    <div className='list add flex-col'>
+    <div className='paym add flex-col'>
       <p>Payments List</p>
-      <div className="list-table">
-        <div className="list-table-format title">
+      <div className="paym-table">
+        <div className="paym-table-format title">
           <b>ID</b>
           <b>Purchase Subtotal</b>
           <b>Payment Method</b>
@@ -38,7 +38,7 @@ const Payments = () => {
         </div>
         {data.map((item, index) => {
           return (
-          <div key={index} className="list-table-format">
+          <div key={index} className="paym-table-format">
             <p>{item.PaymentID}</p>
             <p>{item.PurchaseSubtotal}</p>
             <p>{item.PaymentMethod}</p>
