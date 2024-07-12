@@ -104,10 +104,83 @@ app.post('/add', upload.single('ProdImage'), (req, res) => {
     });
 });
 
+// Checkout endpoint
+app.post('/checkout', async (req, res) => {
+    const { customerDetails, purchaseDetails } = req.body;
+    try {
+        db.beginTransaction(async (err) => {
+            if (err) { throw err; }
 
+            // Check if customer exists
+            db.query('SELECT CustomerID FROM customer WHERE CustomerEmail = ?', [customerDetails.CustomerEmail], (err, results) => {
+                if (err) throw err;
 
+                let customerId;
+                if (results.length > 0) {
+                    customerId = results[0].CustomerID;
+                } else {
+                    // Insert new customer
+                    db.query('INSERT INTO customer SET ?', customerDetails, (err, result) => {
+                        if (err) throw err;
+                        customerId = result.insertId;
+                    });
+                }
 
+                // Insert into purchase table
+                const purchaseData = {
+                    PurchaseDate: new Date(),
+                    CustomerID: customerId
+                    // PaymentID will be updated after payment record is created
+                };
+                db.query('INSERT INTO purchase SET ?', purchaseData, (err, purchaseResult) => {
+                    if (err) throw err;
 
+                    const purchaseId = purchaseResult.insertId;
+
+                    // Insert into sales_record table
+                    purchaseDetails.Products.forEach(product => {
+                        const salesRecord = {
+                            PurchaseID: purchaseId,
+                            ProductID: product.ProductID,
+                            ProductQuantity: product.ProductQuantity,
+                            ProductAmount: product.ProductAmount
+                        };
+                        db.query('INSERT INTO sales_record SET ?', salesRecord, (err) => {
+                            if (err) throw err;
+                        });
+                    });
+
+                    // Insert into payment table
+                    const paymentData = {
+                        PurchaseSubtotal: purchaseDetails.PurchaseSubtotal,
+                        PaymentMethod: purchaseDetails.PaymentMethod,
+                        Discount: purchaseDetails.Discount,
+                        GrandTotal: purchaseDetails.GrandTotal,
+                        PurchaseID: purchaseId // Assuming PaymentID is auto-incremented
+                    };
+                    db.query('INSERT INTO payment SET ?', paymentData, (err, paymentResult) => {
+                        if (err) throw err;
+
+                        // Update purchase record with PaymentID
+                        db.query('UPDATE purchase SET PaymentID = ? WHERE PurchaseID = ?', [paymentResult.insertId, purchaseId], (err) => {
+                            if (err) throw err;
+
+                            db.commit((err) => {
+                                if (err) throw err;
+                                res.json({ success: true, message: 'Checkout successful' });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    } catch (error) {
+        db.rollback(() => {
+            console.error('Checkout failed:', error);
+            res.status(500).json({ success: false, message: "Checkout failed", error });
+        });
+    }
+});
 
 
 
