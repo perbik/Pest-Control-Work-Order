@@ -19,6 +19,39 @@ const db = mysql.createConnection({
     database: "pest_control",
 });
 
+app.post('/signup', (req, res) => {
+    const sql = "INSERT INTO login ('name', 'email', 'password') VALUES (?)";
+    const values = [
+        req.body.name,
+        req.body.email,
+        req.body.password
+    ]
+    db.query(sql, [values], (err, data) => {
+        if(err) {
+            return res.json("Error");
+        }
+        return res.json(data);
+    }) 
+})
+
+app.post('/login', (req, res) => {
+    const sql = "SELECT * FROM login WHERE 'email' = ? AND 'password' AND ?";
+    const values = [
+        req.body.email,
+        req.body.password
+    ]
+    db.query(sql, [values], (err, data) => {
+        if(err) {
+            return res.json("Error");
+        }
+        if(data.length > 0) {
+            return res.json("Success");
+        } else {
+            return res.json("Failed");
+        }
+    })
+})
+
 
 // Dashboard endpoint to get counts of products and customers
 app.get('/dashboard', (req, res) => {
