@@ -3,6 +3,7 @@ import { product_list } from "../assets/assets";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
+  const url = "http://localhost:8081/products";
   const [cartItems, setCartItems] = useState({});
   const [paymentMethod, setPaymentMethod] = useState(null); // No default payment method
 

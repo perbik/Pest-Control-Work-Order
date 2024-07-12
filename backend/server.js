@@ -97,6 +97,7 @@ app.post('/add', upload.single('ProdImage'), (req, res) => {
 
 
 // READ FUNCTIONS DITO SA BABA
+// product table
 app.get('/products', (req, res) => {
     const sql = "SELECT * FROM product";
     db.query(sql, (err, data) => {
@@ -105,6 +106,7 @@ app.get('/products', (req, res) => {
     });
 });
 
+// customer table
 app.get('/customers', (req, res) => {
     const sql = "SELECT * FROM customer";
     db.query(sql, (err, data) => {
@@ -112,6 +114,16 @@ app.get('/customers', (req, res) => {
         return res.json(data);
     });
 });
+
+// purchase table
+app.get('/purchases', (req, res) => {
+    const sql = "SELECT * FROM purchase";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 
 
 

@@ -6,6 +6,9 @@ import Add from './pages/Add/Add'
 import Customers from './pages/Customers/Customers'
 import Dashboard from './pages/Dashboard/Dashboard'
 import Products from './pages/Products/Products'
+import Purchases from './pages/Purchases/Purchases'
+import Payments from './pages/Payments/Payments'
+import Sales from './pages/Sales/Sales'
 import UpdateProd from './pages/Update/UpdateProd'
 import UpdateCust from './pages/Update/UpdateCust'
 import { ToastContainer } from 'react-toastify'
@@ -24,7 +27,9 @@ const App = () => {
             <Route path="/add" element={<Add/>}/>
             <Route path="/products" element={<Products/>}/>
             <Route path="/customers" element={<Customers/>}/>
-
+            <Route path="/purchases" element={<Purchases/>}/>
+            <Route path="/payments" element={<Payments/>}/>
+            <Route path="/sales" element={<Sales/>}/>
 
             <Route path="/updateprod/:ProductID" element={<UpdateProd/>}/>
             <Route path="/updatecust/:CustomerID" element={<UpdateCust/>}/>
