@@ -13,11 +13,12 @@ const Sales = () => {
       .catch(err => console.log(err));
   }, []); // Add dependency array to run only once
 
-  const handleDelete = (PurchaseID) => {
-    axios.delete(`http://localhost:8081/deletesales/${PurchaseID}`)
+  const handleDelete = (PurchaseID, ProductID) => {
+    axios.delete(`http://localhost:8081/deletesales/${PurchaseID}/${ProductID}`)
       .then(res => {
         if (res.data.success) {
-          setData(data.filter(item => item.PurchaseID !== PurchaseID));
+          // Update the state to remove the item with both PurchaseID and ProductID
+          setData(data.filter(item => item.PurchaseID !== PurchaseID || item.ProductID !== ProductID));
           navigate('/sales');
         }
       })
@@ -36,19 +37,19 @@ const Sales = () => {
           <b>Action</b>
         </div>
         {data.map((item, index) => {
-          return (
-          <div key={index} className="sales-table-format">
-            <p>{item.PurchaseID}</p>
-            <p>{item.ProductID}</p>
-            <p>{item.ProductQuantity}</p>
-            <p>{item.ProductAmount}</p>
-            <p className='btn-div'>
-              <Link to={`/updatecust/${item.PurchaseID}`} className="btn-link">Update</Link>
-              <button onClick={() => handleDelete(item.PurchaseID)} className="btn-div">Delete</button>
-            </p>
-          </div>
-          );
-        })}
+  return (
+    <div key={index} className="sales-table-format">
+      <p>{item.PurchaseID}</p>
+      <p>{item.ProductID}</p>
+      <p>{item.ProductQuantity}</p>
+      <p>{item.ProductAmount}</p>
+      <p className='btn-div'>
+        <Link to={`/updatecust/${item.PurchaseID}`} className="btn-link">Update</Link>
+        <button onClick={() => handleDelete(item.PurchaseID, item.ProductID)} className="btn-div">Delete</button>
+      </p>
+    </div>
+  );
+})}
       </div>
     </div>
   );

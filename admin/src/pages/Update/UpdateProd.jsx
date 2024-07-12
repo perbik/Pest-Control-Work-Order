@@ -46,9 +46,11 @@ const UpdateProd = () => {
         toast.success('Product updated successfully!');
         navigate('/products'); // Use navigate here
       } else {
+        toast.error('Error on input fields!');
         console.error('Error:', response.data);
       }
     } catch (error) {
+      toast.error('Error on input fields!');
       console.error('Error uploading product:', error);
     }
   };
