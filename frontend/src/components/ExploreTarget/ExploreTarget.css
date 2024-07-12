@@ -28,7 +28,7 @@
 
 .explore-target-list-item img {
   width: 6vw;
-  min-width: 80px;
+  min-width: 100px;
   cursor: pointer;
   border-radius: 50%;
   transition: 0.2s;
