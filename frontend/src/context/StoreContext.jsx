@@ -45,6 +45,8 @@ const StoreContextProvider = (props) => {
         totalAmount += itemInfo.price * cartItems[item];
       }
     }
+
+    totalAmount = totalAmount.toFixed(2);
     return totalAmount;
   };
 
@@ -59,6 +61,9 @@ const StoreContextProvider = (props) => {
         discount = totalAmount * 0.1;
       }
     }
+
+    // Round discount to two decimal places
+    discount = discount.toFixed(2);
 
     return discount;
   };

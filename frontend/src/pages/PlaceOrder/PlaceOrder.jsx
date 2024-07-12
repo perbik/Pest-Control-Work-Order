@@ -6,12 +6,9 @@ import { StoreContext } from "../../context/StoreContext";
 const PlaceOrder = () => {
   const { getTotalCartAmount, getDiscountedAmount, setPaymentMethod } =
     useContext(StoreContext);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
 
-  const handlePaymentMethodChange = (event) => {
-    const method = event.target.value;
-    setSelectedPaymentMethod(method);
-    setPaymentMethod(method);
+  const formatNumber = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   return (
@@ -27,12 +24,15 @@ const PlaceOrder = () => {
         <div className="total">
           <h2 className="title">Cart Total</h2>
           <div className="total-details">
-            <p className="sub-amount">Subtotal: PHP {getTotalCartAmount()}</p>
+            <p className="sub-amount">
+              Subtotal: PHP {formatNumber(getTotalCartAmount())}
+            </p>
             <p className="discount-amount">
-              Discount: PHP {getDiscountedAmount()}
+              Discount: PHP {formatNumber(getDiscountedAmount())}
             </p>
             <b className="total-amount">
-              Total: PHP {getTotalCartAmount() - getDiscountedAmount()}
+              Total: PHP{" "}
+              {formatNumber(getTotalCartAmount() - getDiscountedAmount())}
             </b>
           </div>
           <button type="submit">CONFIRM</button>
