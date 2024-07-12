@@ -1,40 +1,60 @@
 .dashboard {
-    width: 70%;
-    margin-left: max(5vw,25px);
-    margin-top: 50px;
-    margin-bottom: 50px;
-    color: #6d6d6d;
-    font-size:" 16px";
-  }
-  
-  .metrics {
-    margin-top: 20px;
-    display: flex;
-    gap: 20px;
-  }
-  
-  .metric-container {
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    width: 300px;
-  }
-  
-  .icon {
-    font-size: 36px;
-    padding: 10px 0px 20px 0px;
-  }
+  width: 70%;
+  max-width: 1200px; /* Prevents the dashboard from getting too wide */
+  margin-left: max(5vw, 25px);
+  margin-top: 50px;
+  margin-bottom: 50px;
+  color: #6d6d6d;
+  font-size: 1rem; /* Use rem for scalable font size */
+}
 
-  .react-icon {
-    color: green;
+.metrics {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1200px) {
+  .metrics {
+      grid-template-columns: repeat(3, 1fr); /* Adjust to 3 columns for medium screens */
   }
-  
-  .count {
-    font-size: 40px;
-    font-weight: bold;
-    padding: 0px 0px 10px 0px;
+}
+
+@media (max-width: 900px) {
+  .metrics {
+      grid-template-columns: repeat(2, 1fr); /* Adjust to 2 columns for small screens */
   }
-  
-  .label {
-    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+  .metrics {
+      grid-template-columns: 1fr; /* Stack vertically on very small screens */
+      gap: 15px;
   }
+}
+
+.metric-container {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%; /* Make width flexible */
+  max-width: 300px; /* But don't let it get wider than 300px */
+}
+
+.icon, .count, .label {
+  padding: 0.5rem 0; /* Use rem for scalable padding */
+}
+
+.icon {
+  font-size: 2rem; /* Larger icons on all screen sizes, scalable */
+}
+
+.count {
+  font-size: 2.5rem; /* Larger text, scalable */
+  font-weight: bold;
+}
+
+.label {
+  font-size: 1rem; /* Scalable font size */
+}

@@ -18,7 +18,7 @@ const Purchases = () => {
       .then(res => {
         if (res.data.success) {
           setData(data.filter(item => item.PurchaseID !== PurchaseID));
-          navigate('/customers');
+          navigate('/purchases');
         }
       })
       .catch(err => console.log(err));
@@ -26,7 +26,7 @@ const Purchases = () => {
 
   return (
     <div className='purch add flex-col'>
-      <p>Customers List</p>
+      <p>Purchases List</p>
       <div className="purch-table">
         <div className="purch-table-format title">
           <b>ID</b>
@@ -39,19 +39,18 @@ const Purchases = () => {
   // Convert the ISO string to a Date object and format it to YYYY-MM-DD
   const formattedPurchaseDate = new Date(item.PurchaseDate).toISOString().split('T')[0];
 
-  return (
-    <div key={index} className="purch-table-format">
-      <p>{item.PurchaseID}</p>
-      <p>{formattedPurchaseDate}</p> {/* Use the formatted date here */}
-      <p>{item.CustomerID}</p>
-      <p>{item.PaymentID}</p>
-      <p className='btn-div'>
-        <Link to={`/updatecust/${item.PurchaseID}`} className="btn-link">Update</Link>
-        <button onClick={() => handleDelete(item.PurchaseID)} className="btn-div">Delete</button>
-      </p>
-    </div>
-  );
-})}
+    return (
+        <div key={index} className="purch-table-format">
+            <p>{item.PurchaseID}</p>
+            <p>{formattedPurchaseDate}</p> {/* Use the formatted date here */}
+            <p>{item.CustomerID}</p>
+            <p>{item.PaymentID}</p>
+            <p className='btn-div'>
+                <button onClick={() => handleDelete(item.PurchaseID)} className="btn-div">Delete</button>
+            </p>
+        </div>
+        );
+    })}
       </div>
     </div>
   );

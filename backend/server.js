@@ -36,9 +36,23 @@ app.get('/dashboard', (req, res) => {
         });
     });
 
-    Promise.all([productsCountQuery, customersCountQuery])
-        .then(([productsCount, customersCount]) => {
-            res.json({ productsCount, customersCount });
+    const salesCountQuery = new Promise((resolve, reject) => {
+        db.query('SELECT SUM(GrandTotal) AS salesTotal FROM payment', (err, data) => {
+            if (err) reject(err);
+            else resolve(data[0].salesTotal); // Corrected from salesCount to salesTotal
+        });
+    });
+
+    const purchasesCountQuery = new Promise((resolve, reject) => {
+        db.query('SELECT COUNT(*) AS purchasesCount FROM purchase', (err, data) => {
+            if (err) reject(err);
+            else resolve(data[0].purchasesCount);
+        });
+    });
+
+    Promise.all([productsCountQuery, customersCountQuery, salesCountQuery, purchasesCountQuery])
+        .then(([productsCount, customersCount, salesTotal, purchasesCount]) => { // Corrected variable name
+            res.json({ productsCount, customersCount, salesTotal, purchasesCount }); // Corrected property name
         })
         .catch(error => {
             console.error('Error fetching dashboard data:', error);
@@ -124,6 +138,23 @@ app.get('/purchases', (req, res) => {
     });
 });
 
+// payment table
+app.get('/payments', (req, res) => {
+    const sql = "SELECT * FROM payment";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+// sales_record table
+app.get('/sales', (req, res) => {
+    const sql = "SELECT * FROM sales_record";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
 
 
 
@@ -200,6 +231,42 @@ app.delete('/deletecust/:CustomerID', (req, res) => {
         return res.json({ success: true });
     });
 });
+
+app.delete('/deletepurch/:PurchaseID', (req, res) => {
+    const { PurchaseID } = req.params;
+    // First, delete all associated records from the sales_record table
+    const deleteSalesRecordSql = "DELETE FROM sales_record WHERE PurchaseID = ?";
+    db.query(deleteSalesRecordSql, [PurchaseID], (err, data) => {
+        if (err) {
+            console.error('Error deleting data from sales_record:', err);
+            return res.status(500).json(err);
+        }
+        // After successfully deleting from sales_record, delete from purchase table
+        const deletePurchaseSql = "DELETE FROM purchase WHERE PurchaseID = ?";
+        db.query(deletePurchaseSql, [PurchaseID], (err, data) => {
+            if (err) {
+                console.error('Error deleting data from purchase:', err);
+                return res.status(500).json(err);
+            }
+            return res.json({ success: true });
+        });
+    });
+});
+
+app.delete('/deletesales/:PurchaseID', (req, res) => {
+    const sql = "DELETE FROM sales_record WHERE PurchaseID = ?";
+    const PurchaseID = req.params.PurchaseID;
+
+    db.query(sql, [PurchaseID], (err, data) => {
+        if (err) {
+            console.error('Error deleting data:', err);
+            return res.status(500).json(err);
+        }
+        return res.json({ success: true });
+    });
+});
+
+
 
 
 

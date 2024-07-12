@@ -7,17 +7,20 @@ import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { BiSolidCartAlt } from "react-icons/bi";
 
 const MetricContainer = ({ icon, count, label }) => {
+  // Convert count to a string with commas every three digits
+  const formattedCount = count.toLocaleString();
+
   return (
     <div className="metric-container">
       <div className="icon">{icon}</div>
-      <div className="count">{count}</div>
+      <div className="count">{formattedCount}</div>
       <div className="label">{label}</div>
     </div>
   );
 };
 
 const Dashboard = () => {
-  const [counts, setCounts] = useState({ productsCount: 0, customersCount: 0, salesCount: 0, purchasesCount: 0});
+  const [counts, setCounts] = useState({ productsCount: 0, customersCount: 0, salesTotal: 0, purchasesCount: 0});
 
   useEffect(() => {
     fetch('http://localhost:8081/dashboard')
@@ -46,14 +49,15 @@ const Dashboard = () => {
         />
         <MetricContainer
           icon={<RiMoneyDollarCircleFill className="react-icon" />} 
-          count="168200.50"
+          count={counts.salesTotal}
           label="Total Sales"
         />
         <MetricContainer
           icon={<BiSolidCartAlt className="react-icon"  />} 
-          count="36"
+          count={counts.purchasesCount}
           label="Total Purchases"
         />
+        
       </div>
     </div>
   );
