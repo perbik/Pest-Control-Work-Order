@@ -10,27 +10,32 @@ function Login() {
     password: "",
   });
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({});
-  const handleInput = (event) => {
-    setValues((prev) => ({ ...prev, [event.target.name]: event.target.value }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setErrors(Validation(values));
-    if (errors.email === "" && errors.password === "") {
-      axios
-        .post("http://localhost:8081/", values)
-        .then((res) => {
-          if (res.data === "Success") {
-            navigate("/home");
-          } else {
-            alert("No record existed");
-          }
-        })
-        .catch((err) => console.log(err));
+  const [errors, setErrors] = useState({})
+  const [backendError, setBackendError] = useState([])
+  const handleInput = (event) => {        
+      setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))    
+    }    
+  const handleSubmit =(event) => {        
+      event.preventDefault();        
+      const err = Validation(values);  
+      setErrors(err);        
+      if(err.email === "" && err.password === "") {            
+          axios.post('http://localhost:8081/login', values)            
+          .then(res => {                
+              if(res.data.errors) {                    
+                  setBackendError(res.data.errors);                
+              } else {                    
+                  setBackendError([]);                    
+                  if(res.data === "Success") {                        
+                      navigate('/home');                    
+                  } else {                        
+                      alert("No record existed");                    
+                  }                
+              }                            
+          })            
+          .catch(err => console.log(err));        
+        }    
     }
-  };
 
   return (
     <div className="login">
