@@ -1,10 +1,10 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { product_list } from "../assets/assets";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
-  const [paymentMethod, setPaymentMethod] = useState(null); // No default payment method
+  const [paymentMethod, setPaymentMethod] = useState(null);
 
   const addToCart = (itemId) => {
     setCartItems((prev) => {
@@ -62,6 +62,14 @@ const StoreContextProvider = (props) => {
     return discount;
   };
 
+  const formatAmount = (amount) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "PHP",
+      minimumFractionDigits: 2,
+    }).format(amount);
+  };
+
   const contextValue = {
     product_list,
     cartItems,
@@ -70,9 +78,10 @@ const StoreContextProvider = (props) => {
     removeFromCart,
     clearCart,
     getTotalCartAmount,
+    getDiscountedAmount,
     paymentMethod,
     setPaymentMethod,
-    getDiscountedAmount,
+    formatAmount,
   };
 
   return (

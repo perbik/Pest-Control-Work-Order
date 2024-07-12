@@ -1,4 +1,3 @@
-// cart
 import React, { useContext, useState } from "react";
 import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
@@ -12,6 +11,7 @@ const Cart = () => {
     getTotalCartAmount,
     getDiscountedAmount,
     setPaymentMethod,
+    formatAmount,
   } = useContext(StoreContext);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("null");
   const navigate = useNavigate();
@@ -42,9 +42,9 @@ const Cart = () => {
                 <div className="cart-items-title cart-items-item">
                   <img src={item.product_img} alt="" />
                   <p>{item.product_name}</p>
-                  <p>PHP{item.price}</p>
+                  <p>{formatAmount(item.price)}</p>
                   <p>{cartItems[item._id]}</p>
-                  <p>PHP{item.price * cartItems[item._id]}</p>
+                  <p>{formatAmount(item.price * cartItems[item._id])}</p>
                   <p onClick={() => removeFromCart(item._id)} className="cross">
                     x
                   </p>
@@ -60,9 +60,12 @@ const Cart = () => {
         <div className="cart-total">
           <h2>Cart Totals</h2>
           <div className="cart-total-details">
-            <p>Subtotal: PHP {getTotalCartAmount()}</p>
-            <p>Discount: PHP {getDiscountedAmount()}</p>
-            <b>Total: PHP {getTotalCartAmount() - getDiscountedAmount()}</b>
+            <p>Subtotal: {formatAmount(getTotalCartAmount())}</p>
+            <p>Discount: {formatAmount(getDiscountedAmount())}</p>
+            <b>
+              Total:{" "}
+              {formatAmount(getTotalCartAmount() - getDiscountedAmount())}
+            </b>
           </div>
           <div className="payment-method">
             <p>Payment Method</p>
