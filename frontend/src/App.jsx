@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Cart from "./pages/Cart/Cart";
 import PlaceOrder from "./pages/PlaceOrder/PlaceOrder";
@@ -11,6 +11,7 @@ import Footer from "./components/Footer/Footer";
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState(null);
+  const location = useLocation();
 
   const handleLogin = (userData) => {
     setUser(userData);
@@ -21,17 +22,22 @@ const App = () => {
     setUser(null);
   };
 
+  const isAuthPage =
+    location.pathname === "/" || location.pathname === "/signup";
+
   return (
     <>
       {showLogin ? (
         <LoginPopup setShowLogin={setShowLogin} onLogin={handleLogin} />
       ) : null}
       <div className="app">
-        <NavBar
-          setShowLogin={setShowLogin}
-          user={user}
-          onLogout={handleLogout}
-        />
+        {!isAuthPage && (
+          <NavBar
+            setShowLogin={setShowLogin}
+            user={user}
+            onLogout={handleLogout}
+          />
+        )}
         <Routes>
           <Route path="/" element={<Login onLogin={handleLogin} />} />
           <Route path="/home" element={<Home />} />
@@ -40,7 +46,7 @@ const App = () => {
           <Route path="/order" element={<PlaceOrder />} />
         </Routes>
       </div>
-      <Footer />
+      {!isAuthPage && <Footer />}
     </>
   );
 };
