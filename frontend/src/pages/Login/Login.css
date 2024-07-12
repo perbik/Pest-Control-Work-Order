@@ -1,0 +1,76 @@
+body,
+html {
+  background-color: #38a852;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-content {
+  place-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: mac(23vw, 330px);
+  padding: 25px 30px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-content button {
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  color: white;
+  background-color: #38a852;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.login-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-inputs input {
+  outline: none;
+  border: 1px solid #c9c9c9;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #555;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 10px;
+}
+
+.login-condition {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: -15px;
+}
+
+.login-condition input {
+  margin: 0;
+}
+
+.login-condition p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.signup-span {
+  color: #38a852;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+}
