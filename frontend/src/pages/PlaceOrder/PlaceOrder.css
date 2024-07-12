@@ -52,6 +52,19 @@
   flex-direction: column;
 }
 
-.total-details p {
-  text-align: justify;
+.total-amount {
+  margin-top: 10px;
+  font-size: 30px;
+}
+
+.sub-amount,
+.discount-amount {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 50px;
 }

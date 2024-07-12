@@ -7,15 +7,33 @@ const StoreContextProvider = (props) => {
   const [paymentMethod, setPaymentMethod] = useState(null); // No default payment method
 
   const addToCart = (itemId) => {
-    if (!cartItems[itemId]) {
-      setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
-    } else {
-      setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    }
+    setCartItems((prev) => {
+      const currentQuantity = prev[itemId] || 0;
+      const increment = currentQuantity === 0 ? 5 : 1;
+      const newQuantity = currentQuantity + increment;
+
+      if (newQuantity > 1000) {
+        alert("You can buy a maximum of 1000 units.");
+        return prev;
+      }
+
+      return { ...prev, [itemId]: newQuantity };
+    });
   };
 
   const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    setCartItems((prev) => {
+      const currentQuantity = prev[itemId];
+      if (currentQuantity > 5) {
+        return { ...prev, [itemId]: currentQuantity - 1 };
+      } else {
+        return { ...prev, [itemId]: currentQuantity - 5 };
+      }
+    });
+  };
+
+  const clearCart = () => {
+    setCartItems({});
   };
 
   const getTotalCartAmount = () => {
@@ -50,6 +68,7 @@ const StoreContextProvider = (props) => {
     setCartItems,
     addToCart,
     removeFromCart,
+    clearCart,
     getTotalCartAmount,
     paymentMethod,
     setPaymentMethod,
