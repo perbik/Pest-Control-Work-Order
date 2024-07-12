@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Register from './Register';
-import Login from './Login';
-import Cart from './Cart';
-import Order from './Order';
-import AdminDashboard from './AdminDashboard';
+import Register from './components/Auth/Register';
+import Login from './components/Auth/Login';
+import Cart from './components/Cart/Cart';
+import Order from './components/Order/Order';
+import AdminDashboard from './components/Admin/AdminDashboard';
 
 const App = () => {
     return (

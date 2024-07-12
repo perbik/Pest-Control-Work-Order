@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 const app = express();
 app.use(bodyParser.json());
 
-// Database connection
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -20,7 +19,6 @@ db.connect(err => {
     console.log('MySQL connected');
 });
 
-// Middleware for token verification
 const verifyToken = (req, res, next) => {
     const token = req.headers['authorization'];
     if (!token) return res.status(403).send('A token is required');
@@ -32,7 +30,6 @@ const verifyToken = (req, res, next) => {
     });
 };
 
-// Register user
 app.post('/register', async (req, res) => {
     const { email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -42,7 +39,6 @@ app.post('/register', async (req, res) => {
     });
 });
 
-// Authenticate user
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
     db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
@@ -58,8 +54,6 @@ app.post('/login', (req, res) => {
     });
 });
 
-// Other routes for submit/cancel order, edit cart, checkout, etc.
-// Example: Submit order
 app.post('/orders', verifyToken, (req, res) => {
     const { userId, items } = req.body;
     db.query('INSERT INTO orders (user_id) VALUES (?)', [userId], (err, result) => {
@@ -73,7 +67,6 @@ app.post('/orders', verifyToken, (req, res) => {
     });
 });
 
-// Admin CRUD operations
 app.get('/admin/users', verifyToken, (req, res) => {
     if (!req.user.isAdmin) return res.status(403).send('Admin privilege required');
     db.query('SELECT * FROM users', (err, results) => {
@@ -82,6 +75,5 @@ app.get('/admin/users', verifyToken, (req, res) => {
     });
 });
 
-// Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
