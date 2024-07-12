@@ -25,6 +25,8 @@ function Signup() {
         .post("http://localhost:8081/signup", values)
         .then((res) => {
           navigate("/login");
+
+          navigate("/");
         })
         .catch((err) => console.error(err));
     }
@@ -32,7 +34,7 @@ function Signup() {
 
   return (
     <div className="signup">
-      <form className="signup-content" onSubmit={handleSubmit}>
+      <form className="signup-content" action="" onSubmit={handleSubmit}>
         <h2>Sign up</h2>
         <div className="signup-inputs">
           <div className="signup-name">
