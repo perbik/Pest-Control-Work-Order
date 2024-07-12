@@ -11,16 +11,16 @@
     gap: 20px;
 }
 
-.add-img-upload img{
-    width: 425px;
+.add-image-upload img{
+    width: 280px;
     cursor: pointer;
 }
 
-.add-product-name, .add-product-description{
-    width: max(40%,280px);
+.add-product-name{
+    width: 280px;
 }
 
-.add-product-name input, .add-product-description textarea{
+.add-product-name input{
     padding: 10px;
 }
 
@@ -30,12 +30,12 @@
 }
 
 .add-category-price select, .add-category-price input{
-    width: 198px;
+    max-width: 120px;
     padding: 10px;
 }
 
 .add-btn{
-    width: 428px;
+    max-width: 120px;
     border: none;
     padding: 10px;
     background-color: black;
