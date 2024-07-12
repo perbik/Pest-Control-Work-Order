@@ -1,28 +1,41 @@
-import React, { useContext } from "react";
+//placeorder
+import React, { useContext, useState } from "react";
 import "./PlaceOrder.css";
 import { StoreContext } from "../../context/StoreContext";
 
 const PlaceOrder = () => {
-  const { getTotalCartAmount } = useContext(StoreContext);
+  const { getTotalCartAmount, getDiscountedAmount, setPaymentMethod } =
+    useContext(StoreContext);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
+
+  const handlePaymentMethodChange = (event) => {
+    const method = event.target.value;
+    setSelectedPaymentMethod(method);
+    setPaymentMethod(method);
+  };
+
   return (
     <form className="place-order">
       <div className="place-order-left">
         <p className="title">Delivery Information</p>
-        <div className="multi-fields">
-          <input type="text" placeholder="First Name" />
-          <input type="text" placeholder="Last Name" />
-        </div>
+        <input type="text" placeholder="Name" />
         <input type="email" placeholder="Email Address" />
-        <input type="text" placeholder="City" />
+        <input type="text" placeholder="Address" />
         <input type="text" placeholder="Phone" />
       </div>
       <div className="place-order-right">
-        <div className="cart-total">
-          <h2>Cart Total</h2>
-          <div className="cart-total-details">
-            <p>PHP {getTotalCartAmount()}</p>
+        <div className="total">
+          <h2 className="title">Cart Total</h2>
+          <div className="total-details">
+            <p className="sub-amount">Subtotal: PHP {getTotalCartAmount()}</p>
+            <p className="discount-amount">
+              Discount: PHP {getDiscountedAmount()}
+            </p>
+            <b className="total-amount">
+              Total: PHP {getTotalCartAmount() - getDiscountedAmount()}
+            </b>
           </div>
-          <button>PROCEED TO PAYMENT</button>
+          <button type="submit">CONFIRM</button>
         </div>
       </div>
     </form>

@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+body {
+  font-family: "Outfit", sans-serif;
+}
+
 .product-display {
   margin-top: 30px;
 }
@@ -5,6 +11,7 @@
 .product-display h2 {
   font-size: max(2vw, 24px);
   font-weight: 600;
+  margin: 0;
 }
 
 .product-display-list {
@@ -13,4 +20,32 @@
   margin-top: 30px;
   gap: 30px;
   row-gap: 50px;
+}
+
+.product-display-header {
+  margin-bottom: 20px; /* Space between the header and product list */
+}
+
+.product-display-subheader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px; /* Space between the p and button */
+}
+
+.clear-cart-button {
+  align-self: flex-end;
+  background: transparent;
+  font-size: 16px;
+  color: black;
+  border: 1px solid darkred;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.clear-cart-button:hover {
+  background-color: darkred;
+  color: white;
 }

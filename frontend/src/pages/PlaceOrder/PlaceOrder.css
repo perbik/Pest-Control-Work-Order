@@ -36,6 +36,35 @@
   max-width: max(40%, 500px);
 }
 
-.place-order .cart-total button {
+.place-order button {
   margin-top: 30px;
+  margin-top: 30px;
+  padding: 10px;
+  border: none;
+  background-color: #38a852;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.total-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.total-amount {
+  margin-top: 10px;
+  font-size: 30px;
+}
+
+.sub-amount,
+.discount-amount {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 50px;
 }
