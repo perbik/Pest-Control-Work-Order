@@ -81,7 +81,7 @@ export const product_list = [
     _id: "P001",
     product_name: "Fendona",
     product_img: fendona,
-    price: 3800,
+    price: 3800.0,
     description:
       "A fast-acting pyrethroid insecticide that quickly and effectively eliminates disease-causing insects",
     category: "General",
@@ -90,7 +90,7 @@ export const product_list = [
     _id: "P002",
     product_name: "Storm Secure Wax Bait",
     product_img: storm_secure_wax_bait,
-    price: 2350,
+    price: 2350.0,
     description:
       "A ready to use rodenticide for the control of rats and mice in and around buildings",
     category: "Rodent",
@@ -108,7 +108,7 @@ export const product_list = [
     _id: "P004",
     product_name: "Deltacide",
     product_img: delatacide,
-    price: 4400,
+    price: 4400.0,
     description:
       "An effective pyrethroid spray to control all public health pests problem combining rapid knockdown and kill",
     category: "General",
@@ -117,7 +117,7 @@ export const product_list = [
     _id: "P005",
     product_name: "Sumilarv 0.5G",
     product_img: sumilarv,
-    price: 150,
+    price: 150.0,
     description: "An advanced mosquito larval control agent",
     category: "Insect",
   },
@@ -125,7 +125,7 @@ export const product_list = [
     _id: "P006",
     product_name: "Resigen EC",
     product_img: resigen_ec,
-    price: 4400,
+    price: 4400.0,
     description:
       "An environmentally-sensitive solution for flying insect pest and vector-borne disease control",
     category: "Insect",
