@@ -54,7 +54,7 @@ const NavBar = () => {
 
   return (
     <div className="navbar">
-      <Link to="/">
+      <Link to="/home">
         <div className="navbar-logo-container">
           <img id="navbar-logo" src={assets.uno_pest_co} alt="" />
           <h2>Uno Pest Co.</h2>
@@ -108,7 +108,7 @@ const NavBar = () => {
           <img className="cart-icon" src={assets.cart_icon} alt="Cart" />
         </Link>
         <div className="navbar-username" onClick={toggleDropdown}>
-          Hello, {username}
+          Name {username}
           {dropdownVisible && (
             <div className="dropdown-menu">
               <button onClick={handleLogout}>Log out</button>

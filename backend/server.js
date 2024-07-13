@@ -53,6 +53,40 @@ app.post('/login', (req, res) => {
 })
 
 
+app.post('/signup', (req, res) => {
+    const sql = "INSERT INTO login ('name', 'email', 'password') VALUES (?)";
+    const values = [
+        req.body.name,
+        req.body.email,
+        req.body.password
+    ]
+    db.query(sql, [values], (err, data) => {
+        if(err) {
+            return res.json("Error");
+        }
+        return res.json(data);
+    }) 
+})
+
+app.post('/login', (req, res) => {
+    const sql = "SELECT * FROM login WHERE 'email' = ? AND 'password' AND ?";
+    const values = [
+        req.body.email,
+        req.body.password
+    ]
+    db.query(sql, [values], (err, data) => {
+        if(err) {
+            return res.json("Error");
+        }
+        if(data.length > 0) {
+            return res.json("Success");
+        } else {
+            return res.json("Failed");
+        }
+    })
+})
+
+
 // Dashboard endpoint to get counts of products and customers
 app.get('/dashboard', (req, res) => {
     const productsCountQuery = new Promise((resolve, reject) => {
@@ -317,9 +351,19 @@ app.put('/updatepaym/:PaymentID', (req, res) => {
     });
 });
   
+app.put('/updatesales/:PurchaseID/:ProductID', (req, res) => {
+    const { PurchaseID, ProductID } = req.params;
+    const sql = "UPDATE sales_record SET ProductQuantity = ?, ProductAmount = ? WHERE PurchaseID = ? AND ProductID = ?";
+    const { ProductQuantity, ProductAmount } = req.body;
 
-
-
+    db.query(sql, [PurchaseID, ProductID, ProductQuantity, ProductAmount], (err, data) => {
+        if (err) {
+            console.error('Error updating data:', err);
+            return res.status(500).json(err);
+        }
+        return res.json({ success: true });
+    });
+});
 
 
 

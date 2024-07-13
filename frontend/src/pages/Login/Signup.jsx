@@ -8,7 +8,7 @@ function Signup() {
   const [values, setValues] = useState({
     name: "",
     email: "",
-    password: ""
+    password: "",
   });
 
   const navigate = useNavigate();
@@ -24,12 +24,14 @@ function Signup() {
       axios
         .post("http://localhost:8081/signup", values)
         .then((res) => {
-          navigate("/"); // Navigate to login page after successful signup
+          navigate("/login");
+
+          navigate("/");
         })
         .catch((err) => console.error(err));
     }
   };
-  
+
   return (
     <div className="signup">
       <form className="signup-content" action="" onSubmit={handleSubmit}>

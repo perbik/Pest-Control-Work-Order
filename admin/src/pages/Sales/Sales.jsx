@@ -44,7 +44,7 @@ const Sales = () => {
       <p>{item.ProductQuantity}</p>
       <p>{item.ProductAmount}</p>
       <p className='btn-div'>
-        <Link to={`/updatecust/${item.PurchaseID}`} className="btn-link">Update</Link>
+        <Link to={`/updatesales/${item.PurchaseID}`} className="btn-link">Update</Link>
         <button onClick={() => handleDelete(item.PurchaseID, item.ProductID)} className="btn-div">Delete</button>
       </p>
     </div>
