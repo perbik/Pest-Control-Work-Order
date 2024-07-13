@@ -1,4 +1,4 @@
-.list-table-format{
+.paym-table-format{
     display: grid;
     grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
@@ -8,7 +8,7 @@
     font-size: 13px;
 }
 
-.list-table-format-title{
+.paym-table-format-title{
     background-color: #f9f9f9;
 }
 

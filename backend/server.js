@@ -140,12 +140,6 @@ const storage = multer.diskStorage({
 // FOR IMAGE KEME LANG I2
 const upload = multer({ storage: storage });
 
-
-
-
-
-
-
 // CREATE/ADD FUNCTIONS DITO SA BABA
 app.post('/add', upload.single('ProdImage'), (req, res) => {
     if (!req.file) {
@@ -171,85 +165,120 @@ app.post('/add', upload.single('ProdImage'), (req, res) => {
     });
 });
 
-// Checkout endpoint
-app.post('/checkout', async (req, res) => {
+function generateId(prefix, table, column, length = 10) {
+    return new Promise((resolve, reject) => {
+      const query = `SELECT MAX(${column}) as maxId FROM ${table} WHERE ${column} LIKE '${prefix}%'`;
+      db.query(query, (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+  
+        const maxId = results[0].maxId;
+        const nextId = maxId ? parseInt(maxId.slice(prefix.length)) + 1 : 1;
+        const paddedId = String(nextId).padStart(length - prefix.length, '0');
+        resolve(prefix + paddedId);
+      });
+    });
+  }
+  
+  // Endpoint for checkout
+  app.post('/checkout', async (req, res) => {
     const { customerDetails, purchaseDetails } = req.body;
+  
     try {
-        db.beginTransaction(async (err) => {
+      db.beginTransaction(async (err) => {
+        if (err) { throw err; }
+  
+        let customerId = customerDetails.CustomerID;
+        if (!customerId) {
+          const customerQuery = `SELECT CustomerID FROM customer WHERE CustomerEmail = ?`;
+          db.query(customerQuery, [customerDetails.CustomerEmail], async (err, results) => {
             if (err) { throw err; }
-
-            // Check if customer exists
-            db.query('SELECT CustomerID FROM customer WHERE CustomerEmail = ?', [customerDetails.CustomerEmail], (err, results) => {
-                if (err) throw err;
-
-                let customerId;
-                if (results.length > 0) {
-                    customerId = results[0].CustomerID;
-                } else {
-                    // Insert new customer
-                    db.query('INSERT INTO customer SET ?', customerDetails, (err, result) => {
-                        if (err) throw err;
-                        customerId = result.insertId;
-                    });
-                }
-
-                // Insert into purchase table
-                const purchaseData = {
-                    PurchaseDate: new Date(),
-                    CustomerID: customerId
-                    // PaymentID will be updated after payment record is created
+  
+            if (results.length > 0) {
+              customerId = results[0].CustomerID;
+            } else {
+              customerId = await generateId('CU-', 'customer', 'CustomerID', 6);
+              const newCustomer = { ...customerDetails, CustomerID: customerId };
+              const customerInsertQuery = 'INSERT INTO customer SET ?';
+              db.query(customerInsertQuery, newCustomer, (err, result) => {
+                if (err) { throw err; }
+              });
+            }
+  
+            await completePurchase(customerId);
+          });
+        } else {
+          await completePurchase(customerId);
+        }
+  
+        async function completePurchase(customerId) {
+          const purchaseId = await generateId('UPC', 'purchase', 'PurchaseID', 10);
+          const purchaseData = {
+            PurchaseID: purchaseId,
+            PurchaseDate: new Date(),
+            CustomerID: customerId,
+          };
+          const purchaseInsertQuery = 'INSERT INTO purchase SET ?';
+          db.query(purchaseInsertQuery, purchaseData, (err, purchaseResult) => {
+            if (err) { throw err; }
+  
+            const salesRecords = purchaseDetails.Products.map((product) => ({
+              PurchaseID: purchaseId,
+              ProductID: product.ProductID,
+              ProductQuantity: product.ProductQuantity,
+              ProductAmount: product.ProductAmount,
+            }));
+            
+            const salesInsertQuery = 'INSERT INTO sales_record (PurchaseID, ProductID, ProductQuantity, ProductAmount) VALUES ?';
+            const salesValues = salesRecords.map(record => Object.values(record));
+            db.query(salesInsertQuery, [salesValues], (err) => {
+              if (err) { throw err; }
+  
+              const paymentIdPrefix = {
+                "check": "PCK-",
+                "cash": "PCS-",
+                "debit": "PDB-",
+                "credit": "PCD-",
+                "e-wallet": "PEW-",
+                "bank transfer": "PBT-"
+              }[purchaseDetails.PaymentMethod];
+  
+              generateId(paymentIdPrefix, 'payment', 'PaymentID', 10).then(paymentId => {
+                const paymentData = {
+                  PaymentID: paymentId,
+                  PurchaseSubtotal: purchaseDetails.PurchaseSubtotal,
+                  PaymentMethod: purchaseDetails.PaymentMethod,
+                  Discount: purchaseDetails.Discount,
+                  GrandTotal: purchaseDetails.GrandTotal,
+                  PurchaseID: purchaseId,
                 };
-                db.query('INSERT INTO purchase SET ?', purchaseData, (err, purchaseResult) => {
-                    if (err) throw err;
-
-                    const purchaseId = purchaseResult.insertId;
-
-                    // Insert into sales_record table
-                    purchaseDetails.Products.forEach(product => {
-                        const salesRecord = {
-                            PurchaseID: purchaseId,
-                            ProductID: product.ProductID,
-                            ProductQuantity: product.ProductQuantity,
-                            ProductAmount: product.ProductAmount
-                        };
-                        db.query('INSERT INTO sales_record SET ?', salesRecord, (err) => {
-                            if (err) throw err;
-                        });
+  
+                const paymentInsertQuery = 'INSERT INTO payment SET ?';
+                db.query(paymentInsertQuery, paymentData, (err, paymentResult) => {
+                  if (err) { throw err; }
+  
+                  db.query('UPDATE purchase SET PaymentID = ? WHERE PurchaseID = ?', [paymentId, purchaseId], (err) => {
+                    if (err) { throw err; }
+  
+                    db.commit((err) => {
+                      if (err) { throw err; }
+                      res.json({ success: true, message: 'Checkout successful' });
                     });
-
-                    // Insert into payment table
-                    const paymentData = {
-                        PurchaseSubtotal: purchaseDetails.PurchaseSubtotal,
-                        PaymentMethod: purchaseDetails.PaymentMethod,
-                        Discount: purchaseDetails.Discount,
-                        GrandTotal: purchaseDetails.GrandTotal,
-                        PurchaseID: purchaseId // Assuming PaymentID is auto-incremented
-                    };
-                    db.query('INSERT INTO payment SET ?', paymentData, (err, paymentResult) => {
-                        if (err) throw err;
-
-                        // Update purchase record with PaymentID
-                        db.query('UPDATE purchase SET PaymentID = ? WHERE PurchaseID = ?', [paymentResult.insertId, purchaseId], (err) => {
-                            if (err) throw err;
-
-                            db.commit((err) => {
-                                if (err) throw err;
-                                res.json({ success: true, message: 'Checkout successful' });
-                            });
-                        });
-                    });
+                  });
                 });
+              }).catch(err => { throw err; });
             });
-        });
+          });
+        }
+      });
     } catch (error) {
-        db.rollback(() => {
-            console.error('Checkout failed:', error);
-            res.status(500).json({ success: false, message: "Checkout failed", error });
-        });
+      db.rollback(() => {
+        console.error('Checkout failed:', error);
+        res.status(500).json({ success: false, message: "Checkout failed", error });
+      });
     }
-});
-
-
+  });
 
 // READ FUNCTIONS DITO SA BABA
 // product table
