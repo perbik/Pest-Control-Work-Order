@@ -25,7 +25,6 @@ function Signup() {
         .post("http://localhost:8081/signup", values)
         .then((res) => {
           navigate("/login");
-
           navigate("/");
         })
         .catch((err) => console.error(err));
